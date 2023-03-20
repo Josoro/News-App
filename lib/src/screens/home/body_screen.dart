@@ -37,51 +37,65 @@ class _BodyScreenState extends State<BodyScreen> {
               return ListView.builder(
                 itemCount: articleList.length,
                 itemBuilder: (contex, index) {
-                  return Container(
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(kBorderRadius),
-                          boxShadow: const [
-                            BoxShadow(
-                                blurRadius: 1,
-                                color: kGrey,
-                                offset: Offset(0, 1),
-                                spreadRadius: 1)
-                          ]),
-                      height: SizeConfig.screenHeight! * 0.20,
-                      margin: EdgeInsets.only(
-                        bottom: SizeConfig.screenHeight! * 0.01,
-                        top: SizeConfig.screenHeight! * 0.01,
-                        left: SizeConfig.screenWidth! * 0.02,
-                        right: SizeConfig.screenWidth! * 0.02,
-                      ),
-                      child: Row(children: <Widget>[
-                        Container(
-                          width: SizeConfig.screenWidth! * 0.4,
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(kBorderRadius),
-                                  bottomLeft: Radius.circular(kBorderRadius)),
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                    articleList[index].urlToImage.toString(),
-                                  ),
-                                  fit: BoxFit.cover)),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/details');
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: kWhite,
+                            borderRadius: BorderRadius.circular(kBorderRadius),
+                            boxShadow: const [
+                              BoxShadow(
+                                  blurRadius: 1,
+                                  color: kGrey,
+                                  offset: Offset(0, 1),
+                                  spreadRadius: 1)
+                            ]),
+                        height: SizeConfig.screenHeight! * 0.20,
+                        margin: EdgeInsets.only(
+                          bottom: SizeConfig.screenHeight! * 0.01,
+                          top: SizeConfig.screenHeight! * 0.01,
+                          left: SizeConfig.screenWidth! * 0.02,
+                          right: SizeConfig.screenWidth! * 0.02,
                         ),
-                        SizedBox(width: SizeConfig.screenHeight! * 0.03),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: SizeConfig.screenHeight! * 0.01),
-                          child: const Column(
-                            children: [
-                              Text(
-                                'hola',
-                                style: TextStyle(color: kBlack, fontSize: 16),
-                              )
-                            ],
+                        child: Row(children: <Widget>[
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(kBorderRadius),
+                                bottomLeft: Radius.circular(kBorderRadius)),
+                            child: SizedBox(
+                              width: SizeConfig.screenWidth! * 0.5,
+                              height: SizeConfig.screenHeight! * 0.20,
+                              child: (articleList[index].urlToImage != null)
+                                  ? FadeInImage(
+                                      placeholder: const AssetImage(
+                                          'assets/images/giphy.gif'),
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(articleList[index]
+                                          .urlToImage
+                                          .toString()))
+                                  : const Image(
+                                      image: AssetImage(
+                                          'assets/images/no-image.png'),
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
                           ),
-                        )
-                      ]));
+                          SizedBox(width: SizeConfig.screenHeight! * 0.01),
+                          Container(
+                              height: SizeConfig.screenHeight! * 0.15,
+                              width: SizeConfig.screenWidth! * 0.4,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: SizeConfig.screenHeight! * 0.01),
+                              child: Text(
+                                articleList[index].title.toString(),
+                                overflow: TextOverflow.clip,
+                                style: const TextStyle(
+                                    color: kBlack, fontSize: 14),
+                              )),
+                        ])),
+                  );
                 },
               );
             }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/src/constants/size_config.dart';
-
-import '../../constants/styles.dart';
-import '../screens.dart';
+import 'package:news_app/src/screens/home/body_screen.dart';
+import 'package:news_app/src/widgets/app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   static String routeName = '/home';
@@ -11,23 +10,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      appBar: buildAppbar(),
-      body: const BodyScreen(),
+    return const Scaffold(
+      appBar: CustomAppBar(text: 'News'),
+      body: BodyScreen(),
     );
   }
 }
-
-AppBar buildAppbar() => AppBar(
-    centerTitle: true,
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(kBorderAppBar),
-            bottomRight: Radius.circular(kBorderAppBar))),
-    title: Text(
-      'News'.toUpperCase(),
-      style: kEncodeSansBold.copyWith(
-        color: kBlack,
-        fontSize: SizeConfig.blockSizeHorizontal! * 5,
-      ),
-    ));
